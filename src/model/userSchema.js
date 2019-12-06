@@ -1,6 +1,7 @@
 const mongoose = require('../database/Db');
+const encryptService = require('../services/encryptService');
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   nome: { type: String, require: true },
   idade: Number,
   telefone: String,
@@ -8,6 +9,11 @@ const userSchema = mongoose.Schema({
   senha: { type: String, require: true, select: false },
   favoritos: [],
   createdAt: { type: Date, default: Date.now }
+});
+
+userSchema.pre('save', async function(next) {
+  this.senha = await encryptService.encrypt(this.senha);
+  next();
 });
 
 const user = mongoose.model('User', userSchema);
