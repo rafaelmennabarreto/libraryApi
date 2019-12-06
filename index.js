@@ -4,16 +4,16 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3333;
 
 app.use(bodyParser.json());
-
-const Routes = require('./src/routes');
-app.use(Routes);
 
 app.use(morgan('combined'));
 app.use(cors());
 
+const Routes = require('./src/routes');
+app.use(Routes);
+
 app.listen(PORT, () => {
-  console.log('server started');
+  console.log('server started on port ' + PORT);
 });
