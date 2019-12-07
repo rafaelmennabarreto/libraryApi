@@ -5,6 +5,8 @@ const routes = express.Router();
 const userController = require('./controller/userController');
 routes.get('/user', userController.get);
 routes.post('/user', userController.save);
+routes.put('/user', userController.update);
+routes.delete('/user', userController.remove);
 
 // BookRoutes
 const bookController = require('./controller/bookController');

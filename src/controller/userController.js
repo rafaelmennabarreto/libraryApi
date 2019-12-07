@@ -10,7 +10,7 @@ const userController = {
   },
 
   async save(req, resp) {
-    const { nome, idade, telefone, email, senha } = req.body;
+    const { nome, idade, telefone, email, senha } = req.body.user;
 
     if (await validate.verifyEmailExist(email, user)) {
       return resp
@@ -25,9 +25,34 @@ const userController = {
     );
   },
 
-  update(req, resp) {},
+  async update(req, resp) {
+    const { user: reqUser } = req.body;
+    const savedUser = await user.findById(reqUser._id);
 
-  remove(req, resp) {},
+    userFactory.updateUser(savedUser, reqUser);
+
+    await savedUser.save();
+    return resp.send(
+      response.createResponse('User succefull updated', {
+        ...savedUser.toObject(),
+        senha: ''
+      })
+    );
+  },
+
+  async remove(req, resp) {
+    const { _id } = req.body.user;
+    const savedUser = await user.findById(_id);
+
+    if (!savedUser) {
+      return resp
+        .status(400)
+        .send(response.createResponse('User not founded', ''));
+    }
+
+    await user.remove(savedUser);
+    return resp.send(response.createResponse('User deleted', savedUser));
+  },
 
   signIn(req, resp) {}
 };
