@@ -3,4 +3,16 @@ const createResponse = (message, data) => ({
   data
 });
 
-module.exports = { createResponse };
+const createBearerTokenResponse = (message, token) => {
+  const tokenData = {
+    type: 'Bearer',
+    token
+  };
+
+  return {
+    message,
+    data: tokenData
+  };
+};
+
+module.exports = { createResponse, createBearerTokenResponse };

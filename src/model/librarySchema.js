@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('../database/Db');
 
-const librarySchema = mongoose.Schema({
+const librarySchema = new mongoose.Schema({
   titulo: String,
   ISBN: Number,
   categoria: String,

@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   idade: Number,
   telefone: String,
   email: { type: String, require: true, lowercase: true },
-  senha: { type: String, require: true, select: false },
+  senha: { type: String, require: true },
   favoritos: [],
   createdAt: { type: Date, default: Date.now }
 });

@@ -1,12 +1,38 @@
 const userFactory = require('../factory/userFactory');
 const user = require('../model/userSchema');
+const book = require('../model/librarySchema');
 const response = require('../factory/responseFactory');
 const validate = require('../services/validationService');
 
 const userController = {
-  async get(req, res) {
+  async get(req, resp) {
     const data = await user.find({});
-    res.send(response.createResponse('users finded', data));
+    return resp.send(response.createResponse('users finded', data));
+  },
+
+  async getById(req, resp) {
+    const { id } = req.query;
+
+    try {
+      const savedUser = await user.findById(id);
+
+      if (!savedUser) {
+        return resp
+          .status(400)
+          .send(response.createResponse('inexistent user', ''));
+      }
+
+      return resp.send(
+        response.createResponse('User data', {
+          ...savedUser.toObject(),
+          senha: ''
+        })
+      );
+    } catch {
+      return resp
+        .status(400)
+        .send(response.createResponse('Erro to get user info', ''));
+    }
   },
 
   async save(req, resp) {
@@ -52,9 +78,7 @@ const userController = {
 
     await user.remove(savedUser);
     return resp.send(response.createResponse('User deleted', savedUser));
-  },
-
-  signIn(req, resp) {}
+  }
 };
 
 module.exports = userController;
