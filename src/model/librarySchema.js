@@ -1,10 +1,12 @@
 const mongoose = require('../database/Db');
 
 const librarySchema = new mongoose.Schema({
-  titulo: String,
-  ISBN: Number,
+  titulo: { type: String, required: true },
+  ISBN: { type: Number, required: true },
   categoria: String,
   ano: String
 });
 
-module.exports = librarySchema;
+const book = mongoose.model('Book', librarySchema);
+
+module.exports = book;

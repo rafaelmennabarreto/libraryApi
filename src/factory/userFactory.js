@@ -8,13 +8,13 @@ const createUser = (nome, idade, telefone, email, senha) => ({
 });
 
 const updateUser = (userToUpdate, user2) => {
-  userToUpdate.id = copyField(user2.id, userToUpdate.id);
-  userToUpdate.nome = copyField(user2.nome, userToUpdate.nome);
-  userToUpdate.idade = copyField(user2.idade, userToUpdate.idade);
-  userToUpdate.email = copyField(user2.email, userToUpdate.email);
+  userToUpdate.id = gtValueToUpdate(user2.id, userToUpdate.id);
+  userToUpdate.nome = gtValueToUpdate(user2.nome, userToUpdate.nome);
+  userToUpdate.idade = gtValueToUpdate(user2.idade, userToUpdate.idade);
+  userToUpdate.email = gtValueToUpdate(user2.email, userToUpdate.email);
 };
 
-const copyField = (field1, field2) => {
+const gtValueToUpdate = (field1, field2) => {
   return field1 ? field1 : field2;
 };
 
