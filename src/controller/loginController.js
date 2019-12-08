@@ -7,6 +7,7 @@ const loginController = {
   async sigIn(req, resp) {
     const { email, password } = req.body;
     const savedUser = await user.findOne({ email: email });
+
     const validPassword = savedUser
       ? await encryptService.verify(password, savedUser.senha)
       : false;

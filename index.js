@@ -17,6 +17,9 @@ app.use(cors());
 const Routes = require('./src/routes');
 app.use(Routes);
 
+const userService = require('./src/services/userService');
+userService.generateAdmin();
+
 app.listen(PORT, () => {
   console.log('server started on port ' + PORT);
 });
